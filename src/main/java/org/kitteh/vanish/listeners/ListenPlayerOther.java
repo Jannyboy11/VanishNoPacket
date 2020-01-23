@@ -25,6 +25,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerShearEntityEvent;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.kitteh.vanish.Settings;
 import org.kitteh.vanish.VanishPerms;
 import org.kitteh.vanish.VanishPlugin;
@@ -84,24 +85,10 @@ public final class ListenPlayerOther implements Listener {
                     }
                     inventory = player.getEnderChest();
                     break;
-                case DISPENSER:
-                    inventory = ((Dispenser) blockState).getInventory();
-                    break;
-                case HOPPER:
-                    inventory = ((Hopper) blockState).getInventory();
-                    break;
-                case DROPPER:
-                    inventory = ((Dropper) blockState).getInventory();
-                    break;
-                case FURNACE:
-                    inventory = ((Furnace) blockState).getInventory();
-                    break;
-                case BREWING_STAND:
-                    inventory = ((BrewingStand) blockState).getInventory();
-                    break;
-                case BEACON:
-                    inventory = ((Beacon) blockState).getInventory();
-                    break;
+                default:
+                    if (blockState instanceof InventoryHolder) {
+                        inventory = ((InventoryHolder) blockState).getInventory();
+                    }
             }
             if (inventory != null) {
                 event.setCancelled(true);
@@ -117,7 +104,7 @@ public final class ListenPlayerOther implements Listener {
             event.setCancelled(true);
             return;
         }
-        if ((event.getAction() == Action.PHYSICAL) && (event.getClickedBlock().getType() == Material.SOIL)) {
+        if ((event.getAction() == Action.PHYSICAL) && (event.getClickedBlock().getType() == Material.FARMLAND)) {
             if (this.plugin.getManager().isVanished(player) && VanishPerms.canNotTrample(player)) {
                 event.setCancelled(true);
             }

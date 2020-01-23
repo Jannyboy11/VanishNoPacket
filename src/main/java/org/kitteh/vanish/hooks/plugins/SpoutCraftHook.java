@@ -3,6 +3,7 @@ package org.kitteh.vanish.hooks.plugins;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.logging.Level;
@@ -106,7 +107,7 @@ public final class SpoutCraftHook extends Hook implements Listener {
             this.enabled = false;
             return;
         }
-        config.setDefaults(YamlConfiguration.loadConfiguration(stream));
+        config.setDefaults(YamlConfiguration.loadConfiguration(new InputStreamReader(stream)));
         try {
             config.save(confFile);
         } catch (final IOException e) {

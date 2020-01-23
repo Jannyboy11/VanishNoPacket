@@ -1,8 +1,10 @@
 package org.kitteh.vanish.listeners;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
+import com.destroystokyo.paper.event.server.GS4QueryEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -37,4 +39,14 @@ public final class ListenServerPing implements Listener {
             }
         }
     }
+
+    @EventHandler
+    public void onGS4Query(GS4QueryEvent event) {
+        if (event.getQueryType() == GS4QueryEvent.QueryType.FULL) {
+            GS4QueryEvent.QueryResponse response = event.getResponse();
+            Collection<String> playerList = response.getPlayers();
+            playerList.removeAll(manager.getVanishedPlayers());
+        }
+    }
+
 }

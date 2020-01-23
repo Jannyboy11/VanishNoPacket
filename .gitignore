@@ -1,0 +1,14 @@
+#IntelliJ
+.idea/*
+**.iml
+
+#Maven
+target/*
+common/target/*
+paper/target/*
+velocity/target/*
+
+#Eclipse
+.settings/*
+.project
+.classpath
